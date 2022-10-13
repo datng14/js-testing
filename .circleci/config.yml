@@ -2,29 +2,17 @@ version: 2.1
 orbs:
   node: circleci/node@5.0.2
 jobs:
-  build:
-    working_directory: ~/circleci-python
+  build-and-test:
     docker:
-      - image: "circleci/python:3.6.4"
+      - image: "cimg/base:stable"
     steps:
       - checkout
       - node/install:
-        node-version: '16.17.1'
+          node-version: "12.22"
       - node/install-packages
       - run:
-        command: npm run test
-  test:
-    working_directory: ~/circleci-python
-    docker:
-      - image: "circleci/python:3.6.4"
-    steps:
-      - checkout
-      - run: python3 main-test.py
-
+          command: npm run test
 workflows:
-  build_and_test:
+  build-and-test:
     jobs:
-      - build
-      - test:
-          requires:
-            - build
+      - build-and-test
