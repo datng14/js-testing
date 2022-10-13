@@ -7,7 +7,11 @@ jobs:
       - image: "circleci/python:3.6.4"
     steps:
       - checkout
-      - run: npm run test
+      - node/install:
+        node-version: '16.17.1'
+      - node/install-packages
+      - run:
+        command: npm run test
   test:
     working_directory: ~/circleci-python
     docker:
